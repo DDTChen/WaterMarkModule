@@ -32,7 +32,6 @@ import com.wowza.wms.transcoder.model.TranscoderVideoOverlayFrame;
 
 public class ModuleTranscoderOverlayExample extends ModuleBase {
 	
-//	String graphicName = "logo_${com.wowza.wms.plugin.transcoderoverlays.overlayimage.step}.png";
 	String graphicName = "wowzalogo.png";
 	int overlayIndex = 1;
 	    
