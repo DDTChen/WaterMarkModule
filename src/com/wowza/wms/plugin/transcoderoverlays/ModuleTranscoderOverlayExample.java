@@ -135,7 +135,8 @@ public class ModuleTranscoderOverlayExample extends ModuleBase {
 	
 	class TranscoderVideoDecoderNotifyExample extends TranscoderVideoDecoderNotifyBase
 	{
-		private OverlayImage mainImage=null;private OverlayImage wowzaImage=null;
+		private OverlayImage mainImage=null;
+		private OverlayImage wowzaImage=null;
 		private OverlayImage wowzaText = null;
 		private OverlayImage wowzaTextShadow = null;
 		List<EncoderInfo> encoderInfoList = new ArrayList<EncoderInfo>();
@@ -146,8 +147,7 @@ public class ModuleTranscoderOverlayExample extends ModuleBase {
 			int lowerThirdHeight = 70;
 			
 	        //Add Text with a drop shadow
-			
-			mainImage = new OverlayImage(0,srcHeight-400,srcWidth,400,100);
+			mainImage = new OverlayImage(0,srcHeight,srcWidth,400,100);
 
 			wowzaText = new OverlayImage("DWowza_DDT", 14, "SansSerif", Font.BOLD, Color.white, srcWidth,400,100);
 			mainImage.addOverlayImage(wowzaText, 1, 1);
@@ -160,7 +160,7 @@ public class ModuleTranscoderOverlayExample extends ModuleBase {
 		
 		public void onBeforeScaleFrame(TranscoderSessionVideo sessionVideo, TranscoderStreamSourceVideo sourceVideo, long frameCount)
 		{
-			boolean encodeSource=true;
+			boolean encodeSource=false;
 			boolean showTime=true;
 			double scalingFactor=1.0;
 			synchronized(lock)
@@ -226,6 +226,28 @@ public class ModuleTranscoderOverlayExample extends ModuleBase {
 
 	public void onConnect(IClient client, RequestFunction function, AMFDataList params) {
 		getLogger().info("onConnect: " + client.getClientId());
+		
+		AMFDataObj obj = params.getObject(2);
+	    AMFData data = obj.get("app");
+	    
+		getLogger().info("#### onConnect: " + data.toString());
+	     
+//	    if(data.toString().contains("?")){
+//	 
+//	         String[] paramlist = data.toString().split("&amp;");
+//	         String[] userParam = paramlist[1].split("=");
+//	         String userName = userParam[1];
+//	       
+//	        if(this.publisherClients==null){
+//	            this.publisherClients = new HashMap<Integer, String>();
+//	        }
+//	          
+//	        if(this.publisherClients.get(client.getClientId())==null){
+//	            this.publisherClients.put(client.getClientId(),userName);
+//	        } else {
+//	            client.rejectConnection();
+//	        }  
+//	    }
 	}
 
 	public void onConnectAccept(IClient client) {
