@@ -145,18 +145,12 @@ public class ModuleTranscoderOverlayExample extends ModuleBase {
 		{
 			int lowerThirdHeight = 70;
 			
-	        //create a transparent container for the bottom third of the screen.
-	      	mainImage = new OverlayImage(0,srcHeight-lowerThirdHeight,srcWidth,lowerThirdHeight,100);
-	      	 
-	      	//Create the Wowza logo image
-	      	wowzaImage = new OverlayImage(basePath+graphicName,100);
-	      	mainImage.addOverlayImage(wowzaImage,srcWidth-wowzaImage.GetWidth(1.0),0);
-	      	
 	        //Add Text with a drop shadow
-	      	wowzaText = new OverlayImage("Wowza_DDT", 14, "SansSerif", Font.BOLD, Color.white, 66,30,100);
-	      	wowzaTextShadow = new OverlayImage("Wowza_DDT", 14, "SansSerif", Font.BOLD, Color.darkGray, 66,30,100);
-	      	mainImage.addOverlayImage(wowzaText, wowzaImage.GetxPos(1.0)+12, 54);
-	      	wowzaText.addOverlayImage(wowzaTextShadow, 1, 1);
+			
+			mainImage = new OverlayImage(0,srcHeight-400,srcWidth,400,100);
+
+			wowzaText = new OverlayImage("DWowza_DDT", 14, "SansSerif", Font.BOLD, Color.white, srcWidth,400,100);
+			mainImage.addOverlayImage(wowzaText, 1, 1);
 		}
 		
 		public void addEncoder(String name, TranscoderSessionVideoEncode sessionVideoEncode, TranscoderStreamDestinationVideo destinationVideo)
@@ -182,28 +176,17 @@ public class ModuleTranscoderOverlayExample extends ModuleBase {
 					{
 						Date dNow = new Date( );
 						SimpleDateFormat ft = new SimpleDateFormat("hh:mm:ss");
-						wowzaText.SetText(ft.format(dNow));
-						wowzaTextShadow.SetText(ft.format(dNow));
+						wowzaText.SetText("Wowza read by DDT when: " + ft.format(dNow));
 					}
 					if(encodeSource)
 					{
 						//put the image onto the source
 						scalingFactor = 1.0;
-//						TranscoderVideoOverlayFrame overlay = new TranscoderVideoOverlayFrame(mainImage.GetWidth(scalingFactor),
-//								mainImage.GetHeight(scalingFactor), mainImage.GetBuffer(scalingFactor));
-						OverlayImage aaa = new OverlayImage(0,200,200,400,100);
 
-						OverlayImage bbb = new OverlayImage("DWowza_DDT", 14, "SansSerif", Font.BOLD, Color.white, 200,400,100);
-				      	aaa.addOverlayImage(bbb, 1, 1);
-						TranscoderVideoOverlayFrame overlay = new TranscoderVideoOverlayFrame(aaa.GetWidth(scalingFactor),
-								aaa.GetHeight(scalingFactor), aaa.GetBuffer(scalingFactor));
-						overlay.setDstX(aaa.GetxPos(scalingFactor));
-						overlay.setDstY(aaa.GetyPos(scalingFactor));
-
-//						TranscoderVideoOverlayFrame overlay = new TranscoderVideoOverlayFrame(mainImage.GetWidth(scalingFactor),
-//								mainImage.GetHeight(scalingFactor), mainImage.GetBuffer(scalingFactor));
-//						overlay.setDstX(mainImage.GetxPos(scalingFactor));
-//						overlay.setDstY(mainImage.GetyPos(scalingFactor));
+						TranscoderVideoOverlayFrame overlay = new TranscoderVideoOverlayFrame(mainImage.GetWidth(scalingFactor),
+								mainImage.GetHeight(scalingFactor), mainImage.GetBuffer(scalingFactor));
+						overlay.setDstX(mainImage.GetxPos(scalingFactor));
+						overlay.setDstY(mainImage.GetyPos(scalingFactor));
 						sourceVideo.addOverlay(overlayIndex, overlay);
 					} 
 					else	
